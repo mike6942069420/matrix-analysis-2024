@@ -1,0 +1,216 @@
+\documentclass[11pt, legalpaper]{article}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{titlefoot}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+
+
+\title{Week 7 - Matrix analysis}
+\author{Michel Cancalon - 325002}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Exercise 1}
+\begin{enumerate}
+    \item Let's study the simple case where each couple produces 4 children. \\
+    \begin{itemize}
+        \item Couple AA - AA : 4 children with genotype AA
+        \item Couple Aa - Aa : 1 child with genotype AA, 2 children with genotype Aa, 1 child with genotype aa
+        \item Couple aa - aa : 4 children with genotype aa
+    \end{itemize}
+    As such we can see that the next generation will have:
+    \begin{itemize}
+        \item 5 children with genotype AA: 4 from the AA population and 1 from the Aa population
+        \item 2 children with genotype Aa: 2 from the Aa population
+        \item 5 children with genotype aa: 4 from the aa population and 1 from the Aa population
+    \end{itemize}
+    This leads us to the following matrix which represents the population increase after one generation:
+    \begin{center}
+        $\begin{pmatrix}
+            4 & 1 & 0 \\
+            0 & 2 & 0 \\
+            0 & 1 & 4
+        \end{pmatrix}$
+    \end{center}
+    However, we want to know the population proportion after one generation. As such we need to normalize the matrix so that given $\alpha_n + \beta_n + \gamma_n = 1$, we must have the sum of each population of the next generation also equal to 1. This leads us to the following calculation:
+    $$\frac{1}{N}\cdot \begin{pmatrix}
+        4 & 1 & 0 \\
+        0 & 2 & 0 \\
+        0 & 1 & 4
+    \end{pmatrix} \cdot \begin{pmatrix} \alpha_n \\ \beta_n \\ \gamma_n \end{pmatrix}= \frac{1}{N} \cdot \begin{pmatrix} 4\alpha_n+\beta_n \\ 2\beta_n \\ \beta_n + 4\gamma_n \end{pmatrix} \Longleftrightarrow \frac{1}{N}(4\alpha_n+\beta_n +  2\beta_n + \beta_n + 4\gamma_n)=1 \Longleftrightarrow N=4 $$
+    As such, the normalized matrix is:
+    $$\boxed{M=\begin{pmatrix}
+            1 & 0.25 & 0 \\
+            0 & 0.5 & 0 \\
+            0 & 0.25 & 1
+        \end{pmatrix}}$$
+    
+    \item Given the recursive formula $x_n=Mx_{n-1}$, for n generations, we have:
+        $$\boxed{x_n=M^nx_{0}}$$
+    \item Let's first find the eignevalues of the matrix M:
+    \begin{align*}\text{det}(M-\lambda I) & =\begin{vmatrix}
+        1-\lambda & \frac{1}{4} & 0 \\
+        0 & \frac{1}{2}-\lambda & 0 \\
+        0 & \frac{1}{4} & 1-\lambda
+    \end{vmatrix}\\
+    &=(1-\lambda)^2\left(\frac{1}{2}-\lambda\right)\\ \end{align*}
+    We find $\lambda_1=1$ and $\lambda_2=\frac{1}{2}$.\\
+    Let's now find the eigenvectors associated with these eigenvalues:
+    \begin{itemize}
+        \item For $\lambda_1=1$:
+        \begin{align*}
+            (M-I)v_1 & =0\\
+            \begin{pmatrix}
+                0 & \frac{1}{4} & 0 \\
+                0 & -\frac{1}{2} & 0 \\
+                0 & \frac{1}{4} & 0
+            \end{pmatrix}v_1 & =0
+        \end{align*}
+        We find $v_1=\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$ and $v_2=\begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$
+        \item For $\lambda_2=\frac{1}{2}$:
+        \begin{align*}
+            \left(M-\frac{1}{2}I\right)v_3 & =0\\
+            \begin{pmatrix}
+                \frac{1}{2} & \frac{1}{4} & 0 \\
+                0 & 0 & 0 \\
+                0 & \frac{1}{4} & \frac{1}{2}
+            \end{pmatrix}v_3 & =0
+        \end{align*}
+        We find $v_3=\begin{pmatrix} -1 \\ 2 \\ -1 \end{pmatrix}$
+    \end{itemize}
+
+    \item We first notice that if we diagonalize the matrix by writting $M=PDP^{-1}$, we have:
+    $$x_n=PDP^{-1}PDP^{-1}PDP^{-1}...PDP^{-1}x_0=PD^nP^{-1}x_0$$
+    Let's diagonalize the matrix M:
+    $$P=\begin{pmatrix}
+        1 & 0 & -1 \\
+        0 & 0 & 2 \\
+        0 & 1 & -1
+    \end{pmatrix} \Rightarrow  P^{-1}= \begin{pmatrix}
+        1 & 0.5 & 0 \\
+        0 & 0.5 & 1 \\
+        0 & 0.5 & 0
+    \end{pmatrix}$$
+    As such, we have:
+    $$D=P^{-1}M P=\begin{pmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 0.5
+    \end{pmatrix}$$
+    We can now easily calculate $x_n$:
+    \begin{align*}
+        x_n  &=PD^nP^{-1}x_0\\
+                &=\begin{pmatrix}
+        1 & 0 & -1 \\
+        0 & 0 & 2 \\
+        0 & 1 & -1
+    \end{pmatrix}\begin{pmatrix}
+        1^n & 0 & 0 \\
+        0 & 1^n & 0 \\
+        0 & 0 & 0.5^n
+    \end{pmatrix}\begin{pmatrix}
+        1 & 0.5 & 0 \\
+        0 & 0.5 & 1 \\
+        0 & 0.5 & 0
+    \end{pmatrix}x_0\\
+    &=\begin{pmatrix}
+        1 & 0.5\cdot(1-0.5^n) & 0 \\
+        0 & 0.5^n & 0 \\
+        0 & 0.5\cdot(1-0.5^n) & 1
+    \end{pmatrix}
+    \end{align*}
+    For the case where $n=10$, we have:
+    $$\boxed{x_{10}=\begin{pmatrix}
+        1 & 0.5\cdot(1-0.5^{10}) & 0 \\
+        0 & 0.5^{10} & 0 \\
+        0 & 0.5\cdot(1-0.5^{10}) & 1
+    \end{pmatrix} \begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix}\frac{1}{8}(1+3\frac{1023}{1024}) \\ \frac{3}{4\cdot 1024} \\ \frac{1}{8}(1+3\frac{1023}{1024})\end{pmatrix}}$$
+
+    \item As $n$ goes to infinity, we have:
+    $$\lim_{n\to \infty}x_n=\begin{pmatrix}
+        1 & 0.5\cdot(1-0.5^n) & 0 \\
+        0 & 0.5^n & 0 \\
+        0 & 0.5\cdot(1-0.5^n) & 1
+    \end{pmatrix}\begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix} 1 & 0.5 & 0 \\
+        0 & 0& 0 \\
+        0 & 0.5 & 1\end{pmatrix}\begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix} 0.5 \\ 0 \\ 0.5 \end{pmatrix}$$
+    This makes sense because we saw that at the next generation, population $\beta$ decreased while $\alpha$ and $\gamma$ increased equally.
+    
+    \item 
+\end{enumerate}
+
+
+\section{Exercise 2}
+\begin{enumerate}
+    \item Given $A$ with elements $a_{i,j}$ and the matrix $D$ with elements $d_{i,j}$.\\
+    Let's first write $L=D-A$, we see that $L$ has the form:
+    $$l_{i,j}=\begin{cases}
+        d_{i,i} = \text{Amount of edges connected to node $i$} & \text{if } i=j\\
+        -a_{i,j}=-1 & \text{if } i \ne j \text{ and there is an edge between node $i$ and $j$}\\
+        -a_{i,j}=0 & \text{if } i \ne j \text{ and there is no edge between node $i$ and $j$}
+    \end{cases}$$
+    Now let's consider $\tilde{L}=BB^T$, the element $l_{i,j}$ is given by:
+    \begin{equation}\tilde{l}_{i,j}=\sum_{m=1}^{|E|}b_{i,m}b_{j,m}\end{equation}
+    For the matrix $B$, we see that each element $b_{i,j}$ with $i \in \{1, 2, ...,|V|\}$ and $j \in \{1, 2, ...,|E|\}$ describes whether the node $i$ in relationship to a edge $j$ is:
+    \begin{itemize}
+        \item Not connected: 0
+        \item Connected and on the ass of the arrow: -1
+        \item Connected and on the pointy bit of the arrow: 1
+    \end{itemize}
+    So, if we sum the absolute value of all elements of a line $i$ in the matrix $B$, we get the total amount of edges connected to the node $i$.\\
+    Looking at equation $(1)$, we see that this is exactly what the elements of the diagonal achieves: 
+    $$\tilde{l}_{i,i}=\sum_{m=1}^{|E|}b_{i,m}b_{i,m}=\text{Amount of edges connected node $i$} $$
+    Let's now consider elements $\tilde{l}_{i,j}$ with $i \ne j$ (those who are not on the diagonal). \\
+    We can see that $b_{i,m}b_{j,m}$ represents the statements:
+    \begin{itemize}
+        \item Node $i$ and $j$ are not connected through edge $m$: 0
+        \item Node $i$ goes into $j$ or vice versa, through edge $m$: -1
+    \end{itemize} 
+    ($b_{i,m}b_{j,m} \ne 1$ because a edge can not be bidirectional) \\
+    Now if we sum $b_{i,m}b_{j,m}$ i.e we calculate $\tilde{l}_{i,j}=\sum_{m=1}^{|E|}b_{i,m}b_{j,m}$, we see that $\tilde{l}_{i,j} \in \{-1, 0\}$ because for two nodes $i$ and $j$, there can be at most one edge that passes between them. \\
+    So we conclude that:
+    $$\tilde{l}_{i,j}=\begin{cases}
+        \text{Amount of edges connected to node $i$} & \text{if } i=j\\
+        -1 & \text{if } i \ne j \text{ and there is an edge between node $i$ and $j$}\\
+        0 & \text{if } i \ne j \text{ and there is no edge between node $i$ and $j$}
+    \end{cases}$$
+
+    We see that the expressions of the elements of $L$ and $\tilde{L}$ match so $BB^T=D-A$.
+    \item Let's first show that $\lambda_1=0$ is an eigenvalue of $L$. \\
+            We know that for such a eigenvalue, the eigenvectors must satisfy the equation
+            $$Lv=\lambda_1 v \Longleftrightarrow (D-A)v=0$$ 
+            Let's consider elements $a_{i,j}$ of the matrix $A$, we know that $a_{i,j}=1$ if there is an edge between node $i$ and $j$ and $a_{i,j}=0$ otherwise. 
+            This means that if we sum all elements along line $i$ in the matrix $A$, we get the total amount of edges connected to the node $i$. \\
+            Now lets consider the elements $d_{i,i}$ of the matrix $D$, we know that $d_{i,i}$ is the total amount of edges connected to the node $i$. \\
+            As such we deduce that if we sum all elements $l_{i,j}=d_{i,j}-a_{i,j}$ along a line $i$ in the matrix $L$, the result is 0. \\
+            Summing all elements of along a line of $L$ corresponds to the dot product of the line with a vector of ones. This means we respect the following equation:
+            $$(D-A)\begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix}=\begin{pmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{pmatrix}$$
+            This means we have found that the vector of ones is an eigenvector of $L$ associated with the eigenvalue $\lambda_1=0$.\\
+
+            Given that $L= BB^T$, the following also holds true:
+            $$\sqrt{\lambda_1 L}=\sqrt{0 \cdot B B^T}=0$$
+            This is exactly the definition of a singular value of $B$, so we have shown that $\lambda_1=0$ is also a singular value of $B$. 
+    \item   We know that $L$ is of form:
+            $$L=\begin{pmatrix}
+                n-1 & -1 & \cdots & -1 \\
+                -1 & n-1 & \cdots & -1 \\
+                \vdots & \vdots & \ddots & \vdots \\
+                -1 & -1 & \cdots & n-1
+            \end{pmatrix}$$
+            Given that $L$ is symetric by constrution, we know that it's eigenvectors are orthogonal. \\
+
+\end{enumerate}
+\end{document}
