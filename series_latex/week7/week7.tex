@@ -25,7 +25,7 @@
 
 \section{Exercise 1}
 \begin{enumerate}
-    \item Let's study the simple case where each couple produces 4 children. \\
+    \item Let's study the simple case where each couple produces 4 children.
     \begin{itemize}
         \item Couple AA - AA : 4 children with genotype AA
         \item Couple Aa - Aa : 1 child with genotype AA, 2 children with genotype Aa, 1 child with genotype aa
@@ -191,7 +191,7 @@
     We see that the expressions of the elements of $L$ and $\tilde{L}$ match so $BB^T=D-A$.
     \item Let's first show that $\lambda_1=0$ is an eigenvalue of $L$. \\
             We know that for such a eigenvalue, the eigenvectors must satisfy the equation
-            $$Lv=\lambda_1 v \Longleftrightarrow (D-A)v=0$$ 
+            $$Lv=\lambda_1 v_1 \Longleftrightarrow (D-A)v_1=0$$ 
             Let's consider elements $a_{i,j}$ of the matrix $A$, we know that $a_{i,j}=1$ if there is an edge between node $i$ and $j$ and $a_{i,j}=0$ otherwise. 
             This means that if we sum all elements along line $i$ in the matrix $A$, we get the total amount of edges connected to the node $i$. \\
             Now lets consider the elements $d_{i,i}$ of the matrix $D$, we know that $d_{i,i}$ is the total amount of edges connected to the node $i$. \\
@@ -210,7 +210,29 @@
                 \vdots & \vdots & \ddots & \vdots \\
                 -1 & -1 & \cdots & n-1
             \end{pmatrix}$$
-            Given that $L$ is symetric by constrution, we know that it's eigenvectors are orthogonal. \\
-
+            Given that $L$ is symetric by constrution, we know that it's eigenvectors are orthogonal to the one associated to $\lambda_1=0$. \\
+            This means that if $\lambda_i$ ($i \ne 0$) is another eigenvalue with eigen vector $v_i$, we have:
+            $$\sum_{j=1}^{n}v_{i,j}v_{1,j}=\sum_{j=1}^{n}v_{i,j}=0$$
+            Now let's develop the eigenvalue equation for $Lv_i=\lambda_iv_i$:
+            \begin{align*}
+                \begin{pmatrix}
+                    n-1 & -1 & \cdots & -1 \\
+                    -1 & n-1 & \cdots & -1 \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    -1 & -1 & \cdots & n-1
+                \end{pmatrix}\begin{pmatrix}
+                    v_{i,1} \\ v_{i,2} \\ \vdots \\ v_{i,n}
+                \end{pmatrix} & =\lambda_i \begin{pmatrix}
+                    v_{i,1} \\ v_{i,2} \\ \vdots \\ v_{i,n}
+                \end{pmatrix} \\
+                \Longleftrightarrow \\
+                \begin{pmatrix}
+                    v_{i,1}(n-1)-\sum_{j=2}^{n-1}v_{i,j} \\ v_{i,2}(n-1)-\sum_{j=1, j\ne 2}^{n-1}v_{i,j} \\ \vdots \\ v_{i,n}(n-1)-\sum_{j=1}^{n-2}v_{i,j}
+                \end{pmatrix} & =\begin{pmatrix}
+                    \lambda_i v_{i,1} \\\lambda_i  v_{i,2} \\ \vdots \\ \lambda_i v_{i,n}
+                \end{pmatrix} \\
+            \end{align*}
+            We see that for a line $k$ in the matrix, we have:
+            $$v_{i,k}(n-1)-\sum_{j=1, j\ne k}^{n-1}v_{i,j}=\lambda_i v_{i,k}$$
 \end{enumerate}
 \end{document}
