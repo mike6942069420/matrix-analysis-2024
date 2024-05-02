@@ -140,7 +140,7 @@
     \end{pmatrix} \begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix}\frac{1}{8}(1+3\frac{1023}{1024}) \\ \frac{3}{4\cdot 1024} \\ \frac{1}{8}(1+3\frac{1023}{1024})\end{pmatrix}}$$
 
     \item As $n$ goes to infinity, we have:
-    $$\lim_{n\to \infty}x_n=\begin{pmatrix}
+    $$\lim_{n\to \infty}x_n=\lim_{n\to \infty}\begin{pmatrix}
         1 & 0.5\cdot(1-0.5^n) & 0 \\
         0 & 0.5^n & 0 \\
         0 & 0.5\cdot(1-0.5^n) & 1
@@ -162,7 +162,7 @@
         -a_{i,j}=-1 & \text{if } i \ne j \text{ and there is an edge between node $i$ and $j$}\\
         -a_{i,j}=0 & \text{if } i \ne j \text{ and there is no edge between node $i$ and $j$}
     \end{cases}$$
-    Now let's consider $\tilde{L}=BB^T$, the element $l_{i,j}$ is given by:
+    Now let's consider $\tilde{L}=BB^T$, it's element $\tilde{l}_{i,j}$ is given by:
     \begin{equation}\tilde{l}_{i,j}=\sum_{m=1}^{|E|}b_{i,m}b_{j,m}\end{equation}
     For the matrix $B$, we see that each element $b_{i,j}$ with $i \in \{1, 2, ...,|V|\}$ and $j \in \{1, 2, ...,|E|\}$ describes whether the node $i$ in relationship to a edge $j$ is:
     \begin{itemize}
@@ -211,9 +211,11 @@
                 -1 & -1 & \cdots & n-1
             \end{pmatrix}$$
             Given that $L$ is symetric by constrution, we know that it's eigenvectors are orthogonal to the one associated to $\lambda_1=0$. \\
-            This means that if $\lambda_i$ ($i \ne 0$) is another eigenvalue with eigen vector $v_i$, we have:
-            $$\sum_{j=1}^{n}v_{i,j}v_{1,j}=\sum_{j=1}^{n}v_{i,j}=0$$
-            Now let's develop the eigenvalue equation for $Lv_i=\lambda_iv_i$:
+            This means that if $\lambda_i$ ($i \ne 0$) is another eigenvalue with eigenvector $v_i$, we have:
+            \begin{equation}
+                \sum_{j=1}^{n}v_{i,j}v_{1,j}=\sum_{j=1}^{n}v_{i,j}=0
+            \end{equation}
+            Now let's develop the eigenvalue equation $Lv_i=\lambda_iv_i$ for $\lambda_i$:
             \begin{align*}
                 \begin{pmatrix}
                     n-1 & -1 & \cdots & -1 \\
@@ -225,14 +227,68 @@
                 \end{pmatrix} & =\lambda_i \begin{pmatrix}
                     v_{i,1} \\ v_{i,2} \\ \vdots \\ v_{i,n}
                 \end{pmatrix} \\
-                \Longleftrightarrow \\
+                \Longleftrightarrow & \\
                 \begin{pmatrix}
-                    v_{i,1}(n-1)-\sum_{j=2}^{n-1}v_{i,j} \\ v_{i,2}(n-1)-\sum_{j=1, j\ne 2}^{n-1}v_{i,j} \\ \vdots \\ v_{i,n}(n-1)-\sum_{j=1}^{n-2}v_{i,j}
+                    v_{i,1}(n-1)-\sum_{j=2}^{n}v_{i,j} \\ v_{i,2}(n-1)-\sum_{j=1, j\ne 2}^{n}v_{i,j} \\ \vdots \\ v_{i,n}(n-1)-\sum_{j=1}^{n-1}v_{i,j}
                 \end{pmatrix} & =\begin{pmatrix}
                     \lambda_i v_{i,1} \\\lambda_i  v_{i,2} \\ \vdots \\ \lambda_i v_{i,n}
                 \end{pmatrix} \\
             \end{align*}
-            We see that for a line $k$ in the matrix, we have:
-            $$v_{i,k}(n-1)-\sum_{j=1, j\ne k}^{n-1}v_{i,j}=\lambda_i v_{i,k}$$
+            We see that for a line $k$ in the matrix equation, we have:
+            \begin{align*}
+                &v_{i,k}(n-1)-\sum_{j=1, j\ne k}^{n}v_{i,j}=\lambda_i v_{i,k}\\
+                \Longleftrightarrow &\\
+                &v_{i,k}(n-1)-v_{i,k}(\lambda_i-1) =\sum_{j=1}^{n}v_{i,j}\\
+                \Longleftrightarrow &\\
+                &v_{i,k}(n-\lambda_i)=\sum_{j=1}^{n}v_{i,j}
+            \end{align*}
+            Using equation $(2)$ and the above, we can find that:
+            $$\sum_{j=1}^{n}v_{i,j}=0 \Rightarrow v_{i,k}(n-\lambda_i)=0 \Rightarrow \lambda_i=n$$
+            Given we chose an arbitrary line $k$ of the matrix equation, this result holds for all $k$ and we have shown that all eigenvalues (other than $0$) of $L$ are $n$.
+
+            \item Let's compute this directly:
+            \begin{align*}
+                x^TLx &= x^TBB^Tx\\
+                &= (B^Tx)^T(B^Tx)\\
+                &= ||B^Tx||^2 \\
+                &= \sum_{i=1}^{|E|}(B^Tx)_i^2\\
+                &= \sum_{i=1}^{|E|}\left(\sum_{j=1}^{|V|}b_{j,i}x_j\right)^2\\
+            \end{align*}
+            We know that for a fixed column $i$, the vector $(b_{j,i})_{j=1,2,... |V|}$ tells us what nodes are connected at either end of the edge $i$. \\
+            As such, $(b_{j,i})_{j=1,2,... |V|}$ is composed of one value $1$, one value $-1$ and the rest is zeroes. \\
+            This means that the sum $\sum_{j=1}^{|V|}b_{j,i}x_j$ is the difference between two values $x_m$ and $x_n$ and who both correspond to nodes who are connected with edge $j$. \\
+            So we can write:
+            $$\sum_{j=1}^{|V|}b_{j,i}x_j=(x_{m}-x_{n})$$
+            And so we conclude that:
+            $$x^TLx=\sum_{i=1}^{|E|}\left(\sum_{j=1}^{|V|}b_{j,i}x_j\right)^2=\sum_{(m,n) \in E}(x_{m}-x_{n})^2$$
+            Where $(m,n)$ is a pair of nodes connected by an edge amongst all edges $E$.
+            \item Let's consider $1_S$ to be a "mask" of the nodes we want to include with shape $|V| \times 1$.\\
+            Looking at $B$ (with size $|V| \times |E|$), we can see that each of it's colums corresponds to a particular edge.\\
+            If we do the scalar product of $1_S$ with a single column of $B$ (which corresponds to an edge), we can get the following results:
+            \begin{itemize}
+                \item If the edge has both nodes in the mask $1_S$, the scalar product is $-1 \cdot 1 +1 \cdot 1=0$
+                \item If the edge has only one node in the mask $1_S$, the scalar product is $-1$ or $1$
+                \item If the edge has no nodes in the mask $1_S$, the scalar product is $0$
+            \end{itemize}
+            So if we sum up the absolute value of this scalar product for all edges (columns of $B$), we'll get $cut(S)$. This is done by doing the following operation:
+            $$\boxed{1_S^TB \cdot B^T 1_S=1_S^T \cdot L \cdot1_S}$$
+            In the above formula $B^T \cdot 1_S$ returns a column vector where each component is the scalar product described above, and multiplying this by $(B^T \cdot 1_S)^T=1_S^T B$ returns the sum of the absolute values of all the scalar products.
+
+            \item If $S$ is a non empty subset of $V$, then $cut(S)=0$ implies that $S$ is a set of nodes that are not connected to any other nodes outside of $S$. This set of nodes basically forms an "island" in the graph. \\
+            For example, the second graph that was given as an example in the exercise statement has indeed two islands of nodes which respect $cut(\{u,v,w\})=0$ and $cut(\{z,t\})=0$.
+
+            \item The proof is laughably (dare I say trivially even) simple. Using what we have proved in the point 4. , that is:
+            $$x^T L x = \sum_{(i,j)\in E} (x_i-x_j)^2$$
+            We immediately see that a sum of squares is always positive or null, so $x^T L x \geq 0$. \\
+            Hence, we have proved that $L$ is a positive semi-definite matrix.
+
+            \item Let's consider an individual connected component of the graph which we'll call $L_i$.\\
+            We know from point 2. that $L_i$ has an eigenvalue of $0$ which has a multiplicity of 1 at least. \\
+            This means that we can write: $$det(L_i-\lambda I)=\lambda^{m_i} \cdot p_i$$ Where $p_i$ is a polynomial and $m_i \geq 1$ the multiplicity of the eigenvalue $0$.\\
+            Now, if we consider all the connected components of the graph, we can write the determinant of the Laplacian matrix as:
+            $$det(L-\lambda I)=\prod_{i=1}^{k}det(L_i-\lambda I)=\prod_{i=1}^{k}\lambda^{m_i} \cdot p_i=\lambda^{\sum_{i=1}^{k}m_i} \cdot \prod_{i=1}^{k}p_i$$
+            We see that the multiplicity of the eigenvalues $0$ is at the very least equal to the number $k$ of connected components of the graph (in the case where $m_i=1$ for all $i$).
+            
+            \item 
 \end{enumerate}
 \end{document}
