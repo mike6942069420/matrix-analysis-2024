@@ -130,7 +130,7 @@
         1 & 0.5\cdot(1-0.5^n) & 0 \\
         0 & 0.5^n & 0 \\
         0 & 0.5\cdot(1-0.5^n) & 1
-    \end{pmatrix}
+    \end{pmatrix} x_0
     \end{align*}
     For the case where $n=10$, we have:
     $$\boxed{x_{10}=\begin{pmatrix}
@@ -149,7 +149,34 @@
         0 & 0.5 & 1\end{pmatrix}\begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix} 0.5 \\ 0 \\ 0.5 \end{pmatrix}$$
     This makes sense because we saw that at the next generation, population $\beta$ decreased while $\alpha$ and $\gamma$ increased equally.
     
-    \item 
+    \item We have the approximated equation:
+    \begin{align*}
+        &x_n-x_{n-1}=Qx_n\\
+        \Longleftrightarrow & \\
+        &(I-Q)x_n=x_{n-1}\\
+        \Longleftrightarrow & \\
+        &x_n=(I-Q)^{-1}x_{n-1} \\
+        \Longleftrightarrow & \\
+        &Mx_{n-1}=(I-Q)^{-1}x_{n-1}\\
+        \Longleftrightarrow & \\
+        &M=(I-Q)^{-1}
+    \end{align*}
+    So the relationship between the matrix $M$ and the matrix $Q$ is $ \boxed{M=(I-Q)^{-1}}$.\\
+    Now, we can express write the eigen formula for $M$:
+    \begin{align*}
+        &Mv=\lambda v\\
+        \Longleftrightarrow & \\
+        &(I-Q)^{-1}v=\lambda v\\
+        \Longleftrightarrow & \\
+        &(I-Q)v=\frac{1}{\lambda}v\\
+        \Longleftrightarrow& \\
+        &v-Qv=\frac{1}{\lambda}v\\
+        \Longleftrightarrow& \\
+        &Qv=\frac{\lambda-1}{\lambda}v
+    \end{align*}
+    So we see that if $\lambda$ and $v$ are the eigenthingies of $M$, then $Q$ has the same eigenvector $v$ and has an eigenvalue of $\frac{\lambda-1}{\lambda}$.
+    
+    
 \end{enumerate}
 
 

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1714689888.16978 "/home/mike/Documents/EPFL/BA6/Analyse_Mat/matrix-analysis-2024/series_latex/week7/week7.tex" "week7.pdf" "week7" 1714689888.65641 0
-  "/home/mike/Documents/EPFL/BA6/Analyse_Mat/matrix-analysis-2024/series_latex/week7/week7.tex" 1714689887.99029 16450 b5be685ff27c3447f98e97b913007a11 ""
+["pdflatex"] 1714723298.13186 "/home/mike/Documents/EPFL/BA6/Analyse_Mat/matrix-analysis-2024/series_latex/week7/week7.tex" "week7.pdf" "week7" 1714723298.86827 0
+  "/home/mike/Documents/EPFL/BA6/Analyse_Mat/matrix-analysis-2024/series_latex/week7/week7.tex" 1714723297.9006 17465 875924471c3872f30e04294165e9febb ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1713199481 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1713199481 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1713199481 1004 54797486969f23fa377b128694d548df ""
@@ -155,9 +155,9 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1713199481 41588 b43d3e860a4f94167ee1e725ff526a72 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1713703670.44934 325518 3dff2bac5bde75cd7e600320ce8a00d6 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1713703653 7112999 7bf2fd40694e3d7a36a2e74a7bf2b391 ""
-  "week7.aux" 1714689888.59529 376 6efaee3e41171f9e8c6629cb19396c1b "pdflatex"
-  "week7.out" 1714689888.59629 192 6c9fb1084c6b06d09df10581b3d920e1 "pdflatex"
-  "week7.tex" 1714689887.99029 16450 b5be685ff27c3447f98e97b913007a11 ""
+  "week7.aux" 1714723298.7726 376 49f3728d32fda265bd398af74c7ad937 "pdflatex"
+  "week7.out" 1714723298.7726 192 6c9fb1084c6b06d09df10581b3d920e1 "pdflatex"
+  "week7.tex" 1714723297.9006 17465 875924471c3872f30e04294165e9febb ""
   (generated)
   "week7.aux"
   "week7.log"
