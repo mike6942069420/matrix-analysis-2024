@@ -10,9 +10,21 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{tikz}
+
+% cool ass lighting bolts
+\usepackage{marvosym}
+\let\marvosymLightning\Lightning
+\usepackage{wasysym}
+\let\wasysymLightning\lightning
+\usepackage{stmaryrd}
+\let\stmaryrdLightning\lightning
+
+
 \usetikzlibrary{positioning}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
+
+
 
 
 
@@ -137,7 +149,7 @@
         1 & 0.5\cdot(1-0.5^{10}) & 0 \\
         0 & 0.5^{10} & 0 \\
         0 & 0.5\cdot(1-0.5^{10}) & 1
-    \end{pmatrix} \begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix}\frac{1}{8}(1+3\frac{1023}{1024}) \\ \frac{3}{4\cdot 1024} \\ \frac{1}{8}(1+3\frac{1023}{1024})\end{pmatrix}}$$
+    \end{pmatrix} \begin{pmatrix} 1/8 \\ 3/4 \\ 1/8 \end{pmatrix}=\begin{pmatrix}\frac{1}{8}(1+3\frac{1023}{1024}) \\ \frac{3}{4\cdot 1024} \\ \frac{1}{8}(1+3\frac{1023}{1024})\end{pmatrix}=\begin{pmatrix}0.4996337890625 \\ 0.000732421875 \\ 0.4996337890625\end{pmatrix}}$$
 
     \item As $n$ goes to infinity, we have:
     $$\lim_{n\to \infty}x_n=\lim_{n\to \infty}\begin{pmatrix}
@@ -311,11 +323,26 @@
 
             \item Let's consider an individual connected component of the graph which we'll call $L_i$.\\
             We know from point 2. that $L_i$ has an eigenvalue of $0$ which has a multiplicity of 1 at least. \\
-            This means that we can write: $$det(L_i-\lambda I)=\lambda^{m_i} \cdot p_i$$ Where $p_i$ is a polynomial and $m_i \geq 1$ the multiplicity of the eigenvalue $0$.\\
+            This means that we can write: $$det(L_i-\lambda I)=\lambda^{m_i} \cdot p_i$$ Where $p_i$ is a polynomial and $m_i \geq 1$ is the multiplicity of the eigenvalue $0$.\\
             Now, if we consider all the connected components of the graph, we can write the determinant of the Laplacian matrix as:
             $$det(L-\lambda I)=\prod_{i=1}^{k}det(L_i-\lambda I)=\prod_{i=1}^{k}\lambda^{m_i} \cdot p_i=\lambda^{\sum_{i=1}^{k}m_i} \cdot \prod_{i=1}^{k}p_i$$
             We see that the multiplicity of the eigenvalues $0$ is at the very least equal to the number $k$ of connected components of the graph (in the case where $m_i=1$ for all $i$).
             
-            \item 
+            \item Let's suppose by contradiction that $\lambda_1=0$ has a multiplicity of 2 (or more) which means that it has two orthogonal (because $L$ is symetric) eigenvectors $v_1$ and $v_2$, $v_1$ being the vector of ones (defined in point 2.) and $v_2$ being another eigenvector orthogonal to $v_1$.\\
+            We have $v_2 \ne \alpha \cdot v_1$ with $\alpha$ a scalar, because otherwise, both vectors would not be orthogonal. This means that $v_2$ can not be a constant vector.\\
+            We know that $v_2$ is an eigenvector of $L$ associated with the eigenvalue $0$, so we can write:
+            $$v_2^T L v_2=v_2^T \lambda_1 v_2=v_2^T 0 v_2=0$$
+            Thanks to point 4. we can write:
+            $$v_2^T L v_2=\sum_{(i,j)\in E} (v_{2,i}-v_{2,j})^2$$
+            So we have:
+            $$\sum_{(i,j)\in E} (v_{2,i}-v_{2,j})^2=0$$
+            This means that for every edge $(i,j)$, to have $v_2^TL v_2=0$, we must have $v_{2,i}=v_{2,j}$.\\
+            This equality extends to all nodes $v_i$ with $i \in V$ because the graph is connected (has no islands), so the same value must propagate through all the nodes of the graph.\\
+            This means that $v_2$ is a constant vector, which contradicts the fact that $v_2$ is orthogonal to $v_1$.
+            \begin{center}
+                \wasysymLightning \marvosymLightning $\stmaryrdLightning$\wasysymLightning \marvosymLightning $\stmaryrdLightning$\wasysymLightning \marvosymLightning $\stmaryrdLightning$\wasysymLightning \marvosymLightning $\stmaryrdLightning$ CONTRADICTION REACHED \wasysymLightning \marvosymLightning $\stmaryrdLightning$ \wasysymLightning \marvosymLightning $\stmaryrdLightning$\wasysymLightning \marvosymLightning $\stmaryrdLightning$\wasysymLightning \marvosymLightning $\stmaryrdLightning$
+            \end{center}
+            As such, we have proved that the eigenvalue $0$ can not have more than one orthogonal eigenvector, so it's multiplicity for a individual connected graph can not be more than 1 (it is exactly one in fact because of point 2.).
+
 \end{enumerate}
 \end{document}
