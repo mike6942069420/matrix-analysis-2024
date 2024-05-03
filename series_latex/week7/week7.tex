@@ -163,30 +163,33 @@
     
     \item We have the approximated equation:
     \begin{align*}
-        &x_n-x_{n-1}=Qx_n\\
+        &x_n-x_{n-1}=Qx_{n-1}\\
         \Longleftrightarrow & \\
-        &(I-Q)x_n=x_{n-1}\\
+        &x_n=(I+Q)x_{n-1}\\
         \Longleftrightarrow & \\
-        &x_n=(I-Q)^{-1}x_{n-1} \\
+        &Mx_{n-1}=(I+Q)x_{n-1}\\
         \Longleftrightarrow & \\
-        &Mx_{n-1}=(I-Q)^{-1}x_{n-1}\\
-        \Longleftrightarrow & \\
-        &M=(I-Q)^{-1}
+        &M=I+Q
     \end{align*}
-    So the relationship between the matrix $M$ and the matrix $Q$ is $ \boxed{M=(I-Q)^{-1}}$.\\
+    So the relationship between the matrix $M$ and the matrix $Q$ is $ \boxed{M=I+Q}$.\\
     Now, we can express write the eigen formula for $M$:
     \begin{align*}
         &Mv=\lambda v\\
         \Longleftrightarrow & \\
-        &(I-Q)^{-1}v=\lambda v\\
+        &(I+Q)v=\lambda v\\
         \Longleftrightarrow & \\
-        &(I-Q)v=\frac{1}{\lambda}v\\
+        &v+Qv=\lambda v\\
         \Longleftrightarrow& \\
-        &v-Qv=\frac{1}{\lambda}v\\
-        \Longleftrightarrow& \\
-        &Qv=\frac{\lambda-1}{\lambda}v
+        &Qv=(\lambda-1) v
     \end{align*}
-    So we see that if $\lambda$ and $v$ are the eigenthingies of $M$, then $Q$ has the same eigenvector $v$ and has an eigenvalue of $\frac{\lambda-1}{\lambda}$.
+    So we see that if $\lambda$ and $v$ are the eigenthingies of $M$, then $Q$ has the same eigenvector $v$ and has an eigenvalue of $\lambda-1$. \\
+    So in the case of our exercise:
+    $$Q=\begin{pmatrix}
+        2 & 0.25 & 0 \\
+        0 & 1.5 & 0 \\
+        0 & 0.25 & 2
+    \end{pmatrix}$$
+    And the eigenvalues of $Q$ are $\lambda_1=0$ and $\lambda_2=-\frac{1}{2}$. 
     
     
 \end{enumerate}
